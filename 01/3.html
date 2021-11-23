@@ -6,13 +6,44 @@
     <title>模板语法</title>
 </head>
 <body>
-<div id="hello" class="demo">
+<div id="hello" class="demo" >
+    <span v-once>一次性的message: {{ Message }}</span><br/>
+    <span> 动态的message: {{ Message }}</span><br/>
+    <span v-html="Message"></span>
+
+    <input v-model="Message"></input>
+    <br/>
+
+    <p v-bind:id=null>如果v-bind绑定的值是 null 或 undefined，那么该 attribute 将不会被包含在渲染的元素上示</p>
+    <p>数据绑定，就不要使用复杂的js了: message + 'aaa' = {{ Message + 'aaa'}}</p>
+    <p v-if="show"> 显示还是不显示,v-if整个dom都没有了，v-show只是隐藏了</p>
+    <a v-bind:href="url" >有一个链接为：{{ url }}</a><br/>
+    <button v-on:click="doaclick">一个按钮</button><br/>
+    <p v-bind:[attributename]="url" v-on:[methodatte]="doaclick">动态参数,包括属性以及事件监听，但是有很多限制</p>
+    <a v-bind:[attributename]="url" v-on:[methodatte]="doaclick"> 动态参数,包括属性以及事件监听，但是有很多限制</a><br/>
+    <a v-on:[methodatte]="doaclick"> 动态参数,包括属性以及事件监听，但是有很多限制</a><br/>
+    <p :id="id" @click="doaclick">{{ id }}</p>
+    <p> 特别注意：属性的key 必须是小写，对于动态的属性的定义的变量，一定要是小写，</p>
 
 </div>
 <script>
 
     const HelloApp = {
-
+        data() {
+            return {
+                Message: '<p>一个消息</p>',
+                show: true,
+                url: "https://www.baidu.com",
+                attributename: "href",
+                methodatte: "focus",
+                id: 123
+            }
+        },
+        methods: {
+            doaclick(){
+                console.log("doaclick..." + new Date().toLocaleTimeString())
+            }
+        }
     }
     const app = Vue.createApp(HelloApp);
     const vm = app.mount('#hello');

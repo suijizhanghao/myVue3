@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Data Property 和方法</title>
+</head>
+<body>
+<div id="hello" class="demo" >
+
+</div>
+<script>
+
+    const HelloApp = {
+        data() {
+            return {
+                Message: '<p>一个消息</p>'
+            }
+        },
+        methods: {
+            doaclick(){
+                console.log("doaclick..." + new Date().toLocaleTimeString())
+            }
+        }
+    }
+    const app = Vue.createApp(HelloApp);
+    const vm = app.mount('#hello');
+
+</script>
+</body>
+</html>
