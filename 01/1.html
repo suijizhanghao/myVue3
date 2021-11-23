@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>介绍</title>
+</head>
+<body>
+<div id="hello" class="demo">
+    Counter = {{ counter }}
+    <br/>
+    <span v-bind:title="message">
+        显示titile
+    </span>
+    <br/>
+
+    <p>{{ message }}</p>
+    <button v-on:click="reverseMessage">反转 message</button>
+    <br/>
+
+    <input v-model="message" />
+    <br/>
+
+    <span v-if="message">显示</span>
+    <br/>
+
+    <ol>
+        <li v-for="todo in todos">
+            {{ todo.text }}
+        </li>
+    </ol>
+    <br/>
+    <ol>
+        <todo-item></todo-item>
+    </ol>
+    <br/>
+
+    <ol>
+        <todo-item1 v-for="todoiter in todos" v-bind:todo="todoiter"></todo-item1>
+    </ol>
+</div>
+
+
+<script>
+    const TodoItem = {
+        template: '<li>This is a todo</li>'
+    }
+    const TodoItem1 = {
+        props: ['todo'],
+        template: '<li>由组件TodoITem1实现: {{ todo.text }}</li>'
+    }
+
+    const HelloVueApp = {
+        data() {
+            return {
+                counter: 0,
+                message: "这是一个动态的title a b c " + new Date().toLocaleTimeString(),
+                todos: [
+                    {id:1, text: "todo的第一项任务"},
+                    {id:2, text: "todo的第二项任务"}
+                ]
+            }
+        },
+        mounted() {
+            setInterval(() => {
+                this.counter++
+            }, 1000)
+        },
+        methods: {
+            reverseMessage() {
+                this.message = this.message.split('').reverse().join('')
+            }
+        },
+        components: {
+            TodoItem, TodoItem1
+        }
+    };
+
+    const app = Vue.createApp(HelloVueApp)
+    app.mount('#hello')
+
+</script>
+</body>
+</html>
