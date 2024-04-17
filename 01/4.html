@@ -3,11 +3,15 @@
 <head>
     <meta charset="utf-8">
     <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
+
     <title>Data Property 和方法</title>
 </head>
 <body>
 <div id="hello" class="demo" >
-
+    <button @click="doaclick">do a click with：防抖</button>
+    <br/>
+    <a-component-click-test></a-component-click-test>
 </div>
 <script>
 
@@ -18,12 +22,28 @@
             }
         },
         methods: {
-            doaclick(){
-                console.log("doaclick..." + new Date().toLocaleTimeString())
-            }
+            doaclick:_.debounce(function() {
+                console.log("防抖触发..." + new Date().toLocaleTimeString())
+            }, 500)
         }
     }
+    const AComponent = {
+        created() {
+            this.debouncedClick = _.debounce(this.doclick, 500)
+        },
+        unmounted() {
+            // 移除组件时，取消定时器
+            this.debouncedClick.cancel()
+        },
+        methods: {
+            doclick() {
+                console.log("debouncedClick防抖触发..." + new Date().toLocaleTimeString())
+            }
+        },
+        template: "<button @click='debouncedClick'>一个AComponent的click，组件添加 防抖 时需要通过create来绑定</button> "
+    }
     const app = Vue.createApp(HelloApp);
+    app.component('AComponentClickTest', AComponent)
     const vm = app.mount('#hello');
 
 </script>

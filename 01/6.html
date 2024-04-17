@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Class 与 Style 绑定</title>
+    <script src="https://unpkg.com/vue@next"></script>
+
+</head>
+<body>
+<div id="hi">
+    <p>object的class：class 是固定的，变化但是 true or false</P>
+    <p v-bind:class="{active: isActive}">一个class</p>
+    <p v-bind:class="classObject">一个classObject</p>
+    <p :class="computedClassObject">一个计算属性的 classObject</p>
+    <p>数组的class，class的的值是变化的</p>
+    <p :class="[errorclass, okclass]">一个数组的class</p>
+    <p :class="[{'is-active': isActive}, okclass]">一个混合object 和数组的class</p>
+    <a-comp class="外部的class" :class="{active: isActive}"></a-comp>
+    <p>下面是对style的处理，和class有同样的、类似的操作</p>
+    <p :style="{color: thecolor, fontSize: thesize + 'px'}">处理style</p>
+    <p :style="objectStyle">style肯定是要绑定到对象的</p>
+    <p :style="computed_style">如果有变量的话， 估计得使用 计算属性</p>
+    <p :style="[style1, style2, objectStyle, computed_style_gezhongbainh]">同样的，再来个数组，把名字也参数化</p>
+    <p :style ="{display: ['-webkit-box', '-ms-flexbox', 'flex']}">style的多重值，比较有意思，可以方便的解决不同浏览器的样式兼容问题，最后一个会生效！！</p>
+
+</div>
+<script>
+    const hiApp = {
+        data() {
+            return {
+                isActive: true,
+                classObject: {
+                    isOK: true,
+                    isABC: true,
+                    "a-b": true
+                },
+                errorclass: "a-error",
+                okclass: "a-ok",
+                thecolor: 'red',
+                thesize: 19,
+                objectStyle: {
+                    color: 'red',
+                    fontSize: '18px',
+                    height: '17px'
+                },
+                style1: 'color: red',
+                style2: 'fontSize: 12px',
+
+                zdyname: 'right',
+                zdyvalue: 'auto'
+            }
+        },
+        computed: {
+            computedClassObject() {
+                return {
+                    computed_prop_1: this.isActive && this.classObject.isOK,
+                    computed_prop_2: this.isActive || this.classObject.isOK
+                }
+            },
+            computed_style() {
+                return {
+                    color: this.thecolor,
+                    fontSize: this.thesize + 'px'
+                }
+            },
+            computed_style_gezhongbainh() {
+                return this.zdyname + ":" + this.zdyvalue
+            }
+
+        },
+        components: {
+            "a-comp": {
+                template: "<span :class='$attrs.class' class='内部的class'>a-comp的class问题</span><span>a-comp的第二行</span><br/>"
+            }
+        }
+    }
+    const app = Vue.createApp(hiApp)
+    const vm = app.mount('#hi')
+</script>
+
+</body>
+</html>

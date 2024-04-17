@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <title>条件渲染</title>
+</head>
+<body>
+<div id="hello" class="demo">
+    <div v-if="isok"> is ok</div>
+    <div v-else>is not ok</div>
+
+    <template v-if="isShowA"><h5>通过template把整成了1个的if集群，这个和组件的template是不同的的</h5><h6>bbb</h6></template>
+    <template v-if="isShowB"><span>isShowB</span></template>
+
+    <div v-show="isShowC">v-show始终都会渲染，只是通过display来确认是否展示,而且是不支持template的</div>
+    <div v-show="isNotShowC">去一个反义吧</div>
+</div>
+<script>
+  const HelloApp = {
+      data() {
+          return {
+              isok: true,
+              isShowC: false
+          }
+      },
+      computed: {
+          isShowA() {
+              return this.isok;
+          },
+          isShowB() {
+              return this.isok;
+          },
+          isNotShowC() {
+              return !this.isShowC;
+          }
+      }
+
+  }
+
+  const app = Vue.createApp(HelloApp);
+  const vm = app.mount('#hello');
+
+</script>
+</body>
+</html>

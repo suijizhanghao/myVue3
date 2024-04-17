@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+
+    <title>计算属性和侦听器</title>
+</head>
+<body>
+<div id="hello" class="demo">
+    <p>复杂的计算，不能放到模板里面，要使用计算属性搞定；计算属性可以把模板中的js放到代码里面，是绑定到了函数吗？且是无影响的：且vue会自动识别是否计算属性与属性的关联关系，然后进行变化 {{ jisuanshuxing }}</p>
+    <p>计算属性价格基于他们的响应依赖关系缓存。函数调用是主动调用。函数调用每次都要运行，计算属性会缓存，如果不动就不会变化</p>
+    <p>计算属性默认只有getter，也可以设置setter，实际上是：对响应式的vue 多了一层拦截，可以建立自己的响应式代码</p>
+    <br>
+    <p>用户的名字： {{ author.name }}</p>
+    <p>用户的计算名字： {{ jisuan_name }}</p>
+    <input v-model="jisuan_name" />
+    <br/>
+    <p>虽然大多数情况下 计算计算属性会很合适，但是有时候需要自定义一个 侦听器，例如：异步情况  或 开销很大时</p>
+    <p>通常情况下：计算属性是比 侦听器 更好的处理方案；反正都是联动；</p>
+    <p><input v-model="question"></p>
+    <p>联动的answer： {{ answer }}</p>
+</div>
+<script>
+    const HelloApp = {
+        data() {
+            return {
+                author: {
+                    name: "li",
+                    books: [
+                        'book 1',
+                        'book 2',
+                        'book 3'
+                    ]
+                },
+                question: "",
+                answer: "Questings 的 answer"
+            }
+        },
+        computed: {
+            jisuanshuxing() {
+                return this.author.books.length
+            },
+            jisuan_name: {
+                get() {
+                    return this.author.name + "_aaaa"
+                },
+                set(newname) {
+                    this.author.name = newname.split("_")[0]
+                }
+            }
+
+        },
+        watch: {
+            question(newQuestion, oldQuestion) {
+                if (newQuestion.indexOf('?') > -1) {
+                    this.getAnswer_fd();
+                }
+            }
+        },
+        methods: {
+            getAnswer() {
+                console.log(new Date().toLocaleTimeString());
+                this.answer = "new Answer" + new Date().toLocaleTimeString()
+            },
+            getAnswer_fd:_.debounce(function () {
+                this.getAnswer()
+            } ,500)
+        }
+    }
+
+
+  const app = Vue.createApp(HelloApp);
+  const vm = app.mount('#hello');
+
+</script>
+</body>
+</html>
