@@ -79,3 +79,16 @@ for (let i in a) {
 }
 
 console.log("P119");
+
+try {
+    let n = Number(prompt("请输入一个数字:"));
+    console.log(n);
+    debugger;
+} catch (ex) {
+    console.log("输入的不是数字");
+}
+
+import {abc, PI} from "./05-1.js";
+
+abc();
+console.log(PI);
