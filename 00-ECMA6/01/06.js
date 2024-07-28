@@ -36,3 +36,39 @@ let o3 = {
 console.log(o3)
 
 // P150  6.10.3
+const extension = Symbol("abcd abcd");
+Symbol.for("aa");
+
+let position  = {x:1, y :2}
+let dimensions = {w:3, h:4}
+let rect = {...position, ...dimensions}
+console.log(rect)
+
+rect.x = function (){console.log("x")}
+console.log(rect.x)
+rect = {...rect, area(){return "aaaa";}}
+console.log(rect)
+console.log(rect.area())
+rect = {...rect, "method With"(x){console.log(x);}}
+rect["method With"](22)
+
+p = {
+    x: 1.0,
+    y: 1.0,
+    get r() {
+        return Math.hypot(this.x, this.y);
+    },
+    set r(newValue) {
+        const oldValue = Math.hypot(this.x, this.y);
+        let ratio = newValue / oldValue;
+        this.x *= factor;
+        this.y *= factor;
+    },
+    get theta() {
+        return Math.atan2(this.y, this.x);
+    },
+};
+console.log(p)
+console.log(p.r)
+console.log(p.theta)
+// p.theta = 11;
