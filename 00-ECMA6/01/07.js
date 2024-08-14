@@ -50,3 +50,21 @@ b = a.filter(function (item, index, thisArr) {
 console.log(a, b)
 console.log(a.find(item => item % 2 === 0));
 console.log(a.every(item => item < 10));
+console.log(a.reduce(function (prev, item) {
+    return prev + item + "A";
+}, 0));
+
+console.log([1,2,[3,4,[5,6]]].flat(4))
+console.log([1, 2, 3].push([11, 22]));
+a = [3,1, 2, 3, 2, 3, 4, 5, 3, 4];
+var index = -1
+do {
+    index = a.indexOf(3, index+1);
+    if (index !== -1) {
+        console.log("aa:", index, a[index])
+    }
+} while (index !== -1)
+console.log(a.sort(function (a, b) {
+    return a - b;
+}));
+Array.of()

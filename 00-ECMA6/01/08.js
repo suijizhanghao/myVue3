@@ -55,3 +55,84 @@ function max(first = -Infinity, ...reset) {
 }
 
 console.log(max(1, 2, 4, 666, 56));
+
+function uniqueInteger() {
+    return uniqueInteger.counter++;
+}
+uniqueInteger.counter = 0;
+console.log(uniqueInteger());
+console.log(uniqueInteger());
+uniqueInteger[0] = 0;
+uniqueInteger[1] = 1;
+console.log(uniqueInteger);
+console.log(uniqueInteger["0"]);
+console.log(uniqueInteger[1]);
+
+let scope = "global scope";
+
+function checkscope() {
+    let scope = "local scope";
+    function f() {
+        return scope;
+    }
+
+    return f();
+}
+console.log(checkscope());
+
+function checkscope1() {
+    let scope = "local scope";
+    function f() {
+        return scope;
+    }
+
+    return f;
+}
+console.log(checkscope1()());
+
+let uniqueInteger1 = (function(){
+    let counter = 0;
+    return function() {
+        return counter++;
+    }
+}());
+console.log(uniqueInteger1());
+console.log(uniqueInteger1());
+
+function counter () {
+    let n = 0;
+    return {
+        count: function() {
+            return n++;},
+        reset : function() {n =0;}
+    }
+}
+let cc = counter();
+console.log(cc.count());
+console.log(cc.count());
+console.log(cc.reset());
+console.log(cc.count());
+
+function counter1(n) {
+    return {
+        get counter() {return n++;},
+        set count(m) {n = m;}
+    }
+}
+console.log("===========")
+var abc = counter1(2);
+console.log(abc.counter);
+
+// P 8.7函数属性/方法 和构造函数
+
+var name = 'hello'
+const obj = {
+    name: 'obj',
+    a: () => {
+        console.log(this.name)
+    }
+}
+const obj1 = {
+    name: 'obj1'
+}
+console.log(obj.a())
