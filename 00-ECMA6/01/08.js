@@ -55,6 +55,32 @@ function max(first = -Infinity, ...reset) {
 }
 
 console.log(max(1, 2, 4, 666, 56));
+console.log(max(...[22,33,11,44,66,55]));
+
+function vectorMultiply({x, y}, scalar) {
+    return { x: x*scalar, y: y * scalar}
+}
+console.log(vectorMultiply({x:2,y:3}, 3));
+
+function funJieGOou([x, y, ...coords], ...reset) {
+    return [x+y, ...coords, ...reset];
+}
+
+console.log(funJieGOou([1, 2, 3, 4, 5], 5, 6));
+
+var square = function(x) {
+    console.log(x*x)
+}
+var s = square
+s(2.2)
+square(2.2)
+
+o = {squareKey: square}
+o.squareKey(2.2)
+a = [square, x => x*x];
+a[0](2)
+console.log(a[1](2));
+
 
 function uniqueInteger() {
     return uniqueInteger.counter++;
