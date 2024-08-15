@@ -150,16 +150,38 @@ var abc = counter1(2);
 console.log(abc.counter);
 
 // P 8.7函数属性/方法 和构造函数
+console.log("===========")
 
 var name = 'hello'
 const obj = {
-    name: 'obj',
+    name: 'objjjj',
     a: () => {
+        console.log(this.name)
+    },
+    b: function() {
         console.log(this.name)
     }
 }
 const obj1 = {
     name: 'obj1'
 }
-console.log(obj.a())
+obj.a()  // 箭头函数的this是调用时的上下文的this，在chrome，返回hello，在node.js中没有这个，所以打印出hello，因为this好似时没有的
+//箭头函数的this指的是叫用方的this。对于闭包的变量的作用域指的是代码定义时的变量，所以才能成为隐私的内部变量。
+obj.b()
+console.log(obj.a.length,obj.a.name)
 
+function bar(a,b){
+    console.log(this,this.value, a ,b );
+}
+let foo = {value: 2}
+bar.call(foo, 11,22) // 相当于修改了this的指向为foo
+bar.apply(foo, [11,22]) // 相当于修改了this的指向为foo
+
+function bindF(y) {
+    return this.x + y;
+}
+var o = {x: 1}
+var g = bindF.bind(o);  //bind相当于指定下this，和call，apply好似是类似的效果？
+console.log(g(5)); //bind绑定的结果是个函数，需要调用下；而call/apply直接是执行了，这就是区别，且需要输入参数
+console.log(g,g.toString()); //bind
+console.log(bar,bar.toString()); //bind
