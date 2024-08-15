@@ -162,3 +162,4 @@ const obj1 = {
     name: 'obj1'
 }
 console.log(obj.a())
+
