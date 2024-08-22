@@ -77,7 +77,7 @@ square(2.2)
 
 o = {squareKey: square}
 o.squareKey(2.2)
-a = [square, x => x*x];
+var a = [square, x => x*x];
 a[0](2)
 console.log(a[1](2));
 
@@ -165,7 +165,11 @@ const obj = {
 const obj1 = {
     name: 'obj1'
 }
-obj.a()  // 箭头函数的this是调用时的上下文的this，在chrome，返回hello，在node.js中没有这个，所以打印出hello，因为this好似时没有的
+try {
+    obj.a()  // 箭头函数的this是调用时的上下文的this，在chrome，返回hello，在node.js中没有这个，所以打印出hello，因为this好似时没有的
+} catch (error) {
+    console.log(error);
+}
 //箭头函数的this指的是叫用方的this。对于闭包的变量的作用域指的是代码定义时的变量，所以才能成为隐私的内部变量。
 obj.b()
 console.log(obj.a.length,obj.a.name)
@@ -185,3 +189,8 @@ var g = bindF.bind(o);  //bind相当于指定下this，和call，apply好似是�
 console.log(g(5)); //bind绑定的结果是个函数，需要调用下；而call/apply直接是执行了，这就是区别，且需要输入参数
 console.log(g,g.toString()); //bind
 console.log(bar,bar.toString()); //bind
+
+var data1 = [1, 1, 3, 5, 5];
+console.log(data1.reduce((x, y) => x + y));
+console.log(data1.map((x => x * 2)));
+//javaScript 的函数编程实在太太难了

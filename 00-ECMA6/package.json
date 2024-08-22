@@ -1,0 +1,11 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "graceful-fs": "^4.2.11"
+  }
+}
+
