@@ -3,7 +3,7 @@ function range(from, to) {
     r.from = from;
     r.to = to;
     return r;
-};
+}
 range.methods = {
     includes(x) { return this.from <=x && x <= this.to;},
     *[Symbol.iterator]() {
@@ -65,3 +65,64 @@ function Range2(from, to) {
 Range2.prototype.toString = function() {
     return `[${this.from}]`;
 }
+
+class Range3 {
+    constructor(from, to) {
+        this.from = from;
+        this.to = to;
+    }
+    toString() {
+        return `[${this.from}]`;
+    }
+    static aa = 1;
+    static bb = 2;
+    static f1() {
+        console.log(this);
+    }
+    *[Symbol.iterator]() {
+        for(let x = Math.ceil(this.from); x <= this.to; x++) {
+            yield x;
+        }
+    }
+}
+var a  = new Range3(1, 3);
+console.log(a);
+console.log(a.aa);
+console.log(Range3.bb);
+// a.f1();
+Range3.f1();
+
+// p 9.5.2
+class EZArray extends Array {
+    get first() {
+        return this[0];
+    }
+    get last() {
+        return this[this.length - 1];
+    }
+}
+
+let a1 = new EZArray();
+console.log(a1 instanceof EZArray);
+console.log(a1 instanceof Array);
+a1.push(1, 2, 3);
+console.log(EZArray.isArray(a1));
+
+class TypedMap extends  Map {
+    constructor(keyType, valueType) {
+        super();    // 调用父类的构造函数
+        this.keyType = keyType; // this需要在super()之后调用
+        this.valueType = valueType;
+    }
+    set(k, v) {
+        if(!(typeof k === this.keyType)) {
+            throw new TypeError(`${k} is not a ${this.keyType}`);
+        }
+        if(!(typeof v === this.valueType)) {
+            throw new TypeError(`${v} is not a ${this.valueType}`);
+        }
+        super.set(k, v);
+    }
+}
+
+// p 9.5.3
